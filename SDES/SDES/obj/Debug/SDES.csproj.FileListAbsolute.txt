@@ -1,0 +1,14 @@
+C:\Users\user\Desktop\CST407 - Crypto\SDES\SDES\SDES\obj\Debug\SDES.csprojAssemblyReference.cache
+C:\Users\user\Desktop\CST407 - Crypto\SDES\SDES\SDES\obj\Debug\SDES.csproj.CoreCompileInputs.cache
+C:\Users\user\Desktop\CST407 - Crypto\SDES\SDES\SDES\bin\Debug\SDES.exe.config
+C:\Users\user\Desktop\CST407 - Crypto\SDES\SDES\SDES\bin\Debug\SDES.exe
+C:\Users\user\Desktop\CST407 - Crypto\SDES\SDES\SDES\bin\Debug\SDES.pdb
+C:\Users\user\Desktop\CST407 - Crypto\SDES\SDES\SDES\obj\Debug\SDES.exe
+C:\Users\user\Desktop\CST407 - Crypto\SDES\SDES\SDES\obj\Debug\SDES.pdb
+C:\Users\user\Documents\Cryptography\SDES\SDES\bin\Debug\SDES.exe.config
+C:\Users\user\Documents\Cryptography\SDES\SDES\bin\Debug\SDES.exe
+C:\Users\user\Documents\Cryptography\SDES\SDES\bin\Debug\SDES.pdb
+C:\Users\user\Documents\Cryptography\SDES\SDES\obj\Debug\SDES.csprojAssemblyReference.cache
+C:\Users\user\Documents\Cryptography\SDES\SDES\obj\Debug\SDES.csproj.CoreCompileInputs.cache
+C:\Users\user\Documents\Cryptography\SDES\SDES\obj\Debug\SDES.exe
+C:\Users\user\Documents\Cryptography\SDES\SDES\obj\Debug\SDES.pdb

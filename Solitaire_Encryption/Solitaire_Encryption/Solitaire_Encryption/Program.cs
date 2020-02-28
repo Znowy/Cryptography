@@ -10,25 +10,54 @@ namespace Solitaire_Encryption
     {
         static void Main(string[] args)
         {
-            Solitaire();
+            
         }
 
-        static void Solitaire()
+        static string Encrypt(string plaintext, List<string> deck)
         {
-            List<string> deck = CreateDeck();
-            KeyDeck(deck);
+            // PLAINTEXT MUST BE LETTERS ONLY
 
-            GenerateLetter(deck);
+            plaintext = plaintext.ToUpper();
+            plaintext = plaintext.Replace(" ", "");
+
+            int add_buffer = 5 - (plaintext.Length % 5);
+            for (int i = 0; i < add_buffer; i++)
+                plaintext += "X";
+
+            string keystream = "";
+            for (int i = 0; i < plaintext.Length; i++)
+                keystream += GenerateLetter(deck);
+
+            string ciphertext = "";
+            for (int i = 0; i < plaintext.Length; i++)
+                ciphertext += (char)((((plaintext[i] - 64) + (keystream[i] - 64)) % 26) + 64);
+
+            return ciphertext;
         }
 
-        static string GenerateLetter(List<string> deck)
+        static string Decrypt(string ciphertext, List<string> deck)
         {
-            MoveCard(deck, "A", 45);
-            MoveCard(deck, "B", 6);
+            // CIPHERTEXT MUST BE LETTERS ONLY
 
-            TripleCut(deck);
+            ciphertext = ciphertext.ToUpper();
+            ciphertext = ciphertext.Replace(" ", "");
 
-            return "temp";
+            string keystream = "";
+            for (int i = 0; i < ciphertext.Length; i++)
+                keystream += GenerateLetter(deck);
+
+            string plaintext = "";
+            for (int i = 0; i < ciphertext.Length; i++)
+            {
+                int cipherAdd = 0;
+                if (ciphertext[i] <= keystream[i])
+                    cipherAdd = 26;
+                int temp1 = (char)(ciphertext[i] - 64 + cipherAdd);
+                int temp2 = (char)(keystream[i] - 64);
+                plaintext += (char)((((ciphertext[i] - 64 + cipherAdd) - (keystream[i] - 64)) % 26) + 64);
+            }
+
+            return plaintext;
         }
 
         static List<string> CreateDeck()
@@ -41,11 +70,25 @@ namespace Solitaire_Encryption
             return deck_holder;
         }
 
-        static void KeyDeck(List<string> deck)
+        static string GenerateLetter(List<string> deck)
         {
-            // SHUFFLE FOR KEY
+            string generated_letter = "";
+            do
+            {
+                MoveCard(deck, "A", 1);
+                MoveCard(deck, "B", 2);
+
+                TripleCut(deck);
+
+                CountCut(deck);
+
+                generated_letter = OutputCard(deck);
+            } while (generated_letter == "");
+
+            return generated_letter;
         }
 
+        #region Card Moving Functions
         static void MoveCard(List<string> deck, string card_to_move, int num_of_moves)
         {
             int current_place = deck.FindIndex(c => c.Equals(card_to_move));
@@ -53,9 +96,10 @@ namespace Solitaire_Encryption
             int place_to_move = current_place;
             if (current_place + num_of_moves >= deck.Count)
             {
+                /* The soliatire cypher says to move below top card, but seems misinformed for actual code
                 if (current_place + num_of_moves == deck.Count)
                     num_of_moves += 1;
-
+                */
                 place_to_move = (current_place + num_of_moves) % deck.Count;
             }
             else
@@ -86,18 +130,94 @@ namespace Solitaire_Encryption
             List<string> top_cut = deck.GetRange(0, top_joker);
             List<string> bottom_cut = deck.GetRange(bottom_joker + 1, deck.Count - bottom_joker - 1);
 
-            bottom_cut.Reverse();
-            foreach (string c in top_cut)
+            if (top_cut.Count != 0)
             {
-                deck.Remove(c);
-                deck.Insert(bottom_joker + 1, c);
+                foreach (string c in top_cut)
+                {
+                    deck.Remove(c);
+                    deck.Insert(bottom_joker, c);
+                }
             }
 
-            foreach (string c in bottom_cut)
+            if (bottom_cut.Count != 0)
             {
-                deck.Remove(c);
-                deck.Insert(0, c);
+                bottom_cut.Reverse();
+                foreach (string c in bottom_cut)
+                {
+                    deck.Remove(c);
+                    deck.Insert(0, c);
+                }
             }
         }
+
+        static void CountCut(List<string> deck)
+        {
+            int count_card = FindCardValue(deck[53]);
+
+            List<string> top_cut = deck.GetRange(0, count_card);
+            deck.RemoveRange(0, count_card);
+            deck.InsertRange(deck.Count - 1, top_cut);
+        }
+
+        static string OutputCard(List<string> deck)
+        {
+            int count_card = FindCardValue(deck[0]);
+
+            if (deck[count_card] == "A" || deck[count_card] == "B")
+                return "";
+            else
+            {
+                int num = Int32.Parse(deck[count_card]);
+                if (num > 26)
+                    num -= 26;
+                char c = (char)(num + 64);
+                return c.ToString();
+            }
+        }
+        #endregion
+
+        #region Multiple Use Functions
+        static int FindCardValue(string s)
+        {
+            if (s == "A" || s == "B")
+                return 53;
+            else
+                return Int32.Parse(s);
+        }
+        #endregion
+
+        #region Key Shuffle Functions
+        static List<string> PassphraseShuffle(string passphrase)
+        {
+            // PASSPHRASE MUST BE LETTERS ONLY
+
+            passphrase = passphrase.ToUpper();
+            passphrase = passphrase.Replace(" ", "");
+            
+            List<string> deck = CreateDeck();
+
+            foreach (char c in passphrase)
+            {
+                List<string> top_cut = deck.GetRange(0, (int)(c - 65));
+                deck.RemoveRange(0, (int)(c - 65));
+
+                List<string> bottom_cut = deck.GetRange(1, deck.Count - 1);
+                deck.RemoveRange(1, deck.Count - 1);
+
+                deck.InsertRange(1, top_cut);
+                deck.InsertRange(0, bottom_cut);
+            }
+
+            return deck;
+        }
+
+        static List<string> NumberShuffle(int num)
+        {
+            List<string> deck = CreateDeck();
+            for (int i = 0; i <= num; i++)
+                GenerateLetter(deck);
+            return deck;
+        }
+        #endregion
     }
 }

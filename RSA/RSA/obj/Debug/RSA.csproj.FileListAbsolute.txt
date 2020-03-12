@@ -5,3 +5,10 @@ C:\Users\user\Desktop\CST407 - Crypto\RSA\RSA\RSA\obj\Debug\RSA.csprojAssemblyRe
 C:\Users\user\Desktop\CST407 - Crypto\RSA\RSA\RSA\obj\Debug\RSA.csproj.CoreCompileInputs.cache
 C:\Users\user\Desktop\CST407 - Crypto\RSA\RSA\RSA\obj\Debug\RSA.exe
 C:\Users\user\Desktop\CST407 - Crypto\RSA\RSA\RSA\obj\Debug\RSA.pdb
+C:\Users\user\Documents\Cryptography\RSA\RSA\bin\Debug\RSA.exe.config
+C:\Users\user\Documents\Cryptography\RSA\RSA\bin\Debug\RSA.exe
+C:\Users\user\Documents\Cryptography\RSA\RSA\bin\Debug\RSA.pdb
+C:\Users\user\Documents\Cryptography\RSA\RSA\obj\Debug\RSA.csprojAssemblyReference.cache
+C:\Users\user\Documents\Cryptography\RSA\RSA\obj\Debug\RSA.csproj.CoreCompileInputs.cache
+C:\Users\user\Documents\Cryptography\RSA\RSA\obj\Debug\RSA.exe
+C:\Users\user\Documents\Cryptography\RSA\RSA\obj\Debug\RSA.pdb

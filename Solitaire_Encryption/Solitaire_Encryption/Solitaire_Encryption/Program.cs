@@ -20,8 +20,7 @@ namespace Solitaire_Encryption
             plaintext = plaintext.ToUpper();
             plaintext = plaintext.Replace(" ", "");
 
-            int add_buffer = 5 - (plaintext.Length % 5);
-            for (int i = 0; i < add_buffer; i++)
+            while ((plaintext.Length % 5) != 0)
                 plaintext += "X";
 
             string keystream = "";
@@ -30,7 +29,7 @@ namespace Solitaire_Encryption
 
             string ciphertext = "";
             for (int i = 0; i < plaintext.Length; i++)
-                ciphertext += (char)((((plaintext[i] - 64) + (keystream[i] - 64)) % 26) + 64);
+                ciphertext += (char)((((plaintext[i] - 64) + (keystream[i] - 65)) % 26) + 65);
 
             return ciphertext;
         }
